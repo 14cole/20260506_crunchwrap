@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (
 
 from grim_dataset import RcsGrid
 from plot_modes import (
+    az_vs_range_mode,
     azimuth_polar_mode,
     azimuth_rect_mode,
     compare_mode,
@@ -106,6 +107,8 @@ class PlotOpsMixin:
             self._plot_waterfall()
         elif self.last_plot_mode == "isar_image":
             self._plot_isar_image()
+        elif self.last_plot_mode == "az_vs_range":
+            self._plot_az_vs_range()
         elif self.last_plot_mode == "compare":
             self._plot_compare()
 
@@ -122,10 +125,12 @@ class PlotOpsMixin:
             self._plot_isar_image()
 
     def _on_waterfall_style_changed(self) -> None:
-        if self.last_plot_mode not in ("waterfall", "isar_image"):
+        if self.last_plot_mode not in ("waterfall", "isar_image", "az_vs_range"):
             return
         if self.last_plot_mode == "waterfall":
             self._plot_waterfall()
+        elif self.last_plot_mode == "az_vs_range":
+            self._plot_az_vs_range()
         else:
             self._plot_isar_image()
 
@@ -135,6 +140,9 @@ class PlotOpsMixin:
             return
         if self.last_plot_mode == "isar_image":
             self._plot_isar_image()
+            return
+        if self.last_plot_mode == "az_vs_range":
+            self._plot_az_vs_range()
             return
         if self.pbp_fill_mode not in ("heatmap_rcs", "heatmap_density"):
             return
@@ -165,6 +173,8 @@ class PlotOpsMixin:
             self._plot_waterfall()
         elif self.last_plot_mode == "isar_image":
             self._plot_isar_image()
+        elif self.last_plot_mode == "az_vs_range":
+            self._plot_az_vs_range()
 
     def _plot_scale_mode(self) -> str:
         scale = self.combo_plot_scale.currentData()
@@ -872,6 +882,8 @@ class PlotOpsMixin:
     def _on_isar_window_changed(self) -> None:
         if self.last_plot_mode == "isar_image":
             self._plot_isar_image()
+        elif self.last_plot_mode == "az_vs_range":
+            self._plot_az_vs_range()
 
     def _fit_polar_x_range(self) -> tuple[float, float]:
         theta_values: list[np.ndarray] = []
@@ -1274,6 +1286,9 @@ class PlotOpsMixin:
 
     def _plot_isar_image(self) -> None:
         isar_mode.render(self)
+
+    def _plot_az_vs_range(self) -> None:
+        az_vs_range_mode.render(self)
 
     def _plot_waterfall(self) -> None:
         waterfall_mode.render(self)

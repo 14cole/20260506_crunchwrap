@@ -443,6 +443,7 @@ class GrimCutWindow(DatasetOpsMixin, PlotOpsMixin, QMainWindow):
                 ("Hold", "hold"),
                 ("Clear", "clear"),
                 ("ISAR Image", "isar_image"),
+                ("Az. vs D.R.", "az_vs_range"),
             ),
             (
                 ("Fit X", "fit_x"),
@@ -622,6 +623,8 @@ class GrimCutWindow(DatasetOpsMixin, PlotOpsMixin, QMainWindow):
                 controls["azimuth_polar"].clicked.connect(self._plot_azimuth_polar)
             if "isar_image" in controls:
                 controls["isar_image"].clicked.connect(self._plot_isar_image)
+            if "az_vs_range" in controls:
+                controls["az_vs_range"].clicked.connect(self._plot_az_vs_range)
             if "fit_both" in controls:
                 controls["fit_both"].clicked.connect(self._fit_both)
             if "phase" in controls:
